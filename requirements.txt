@@ -1,0 +1,4 @@
+numpy>=1.26
+sounddevice>=0.5.1
+customtkinter>=5.2.2
+pyinstaller>=6.3
