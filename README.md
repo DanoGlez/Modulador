@@ -2,6 +2,12 @@
 
 Voz de robot en vivo para Windows. El micrófono entra al programa, el efecto sale por un cable virtual y FiveM usa el otro extremo de ese cable como micrófono.
 
+## Descargar
+
+[Modulador para Windows](https://github.com/DanoGlez/Modulador/releases/latest/download/Modulador-windows.zip)
+
+Descomprime el zip y abre `Modulador.exe`. Cada cambio en `main` vuelve a publicar ese archivo.
+
 ## FiveM
 
 1. Instala [VB-Audio Cable](https://vb-audio.com/Cable/) y reinicia Windows.
