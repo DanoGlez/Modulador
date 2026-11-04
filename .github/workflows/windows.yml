@@ -1,0 +1,45 @@
+name: Publicar Windows
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  exe:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: python -m pip install -r requirements.txt
+
+      - name: Crear el ejecutable
+        run: python -m PyInstaller --noconfirm --windowed --name Modulador --paths . --collect-all customtkinter --collect-all sounddevice app/main.py
+
+      - name: Comprimir
+        run: tar -a -c -f Modulador-windows.zip -C dist Modulador
+
+      - name: Publicar en Releases
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $notes = @"
+          Descarga Modulador-windows.zip, descomprímelo y abre Modulador.exe.
+
+          En FiveM el micrófono es el otro extremo del cable, normalmente CABLE Output.
+          "@
+          gh release view windows *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create windows Modulador-windows.zip --title "Modulador para Windows" --notes $notes --latest
+          } else {
+            gh release upload windows Modulador-windows.zip --clobber
+          }
